@@ -23,7 +23,7 @@ class DemoApplicationTests {
         ResponseEntity<String> forEntityDev = restTemplate.getForEntity("http://localhost:" + devapp.getMappedPort(8080), String.class);
         System.out.println(forEntityDev.getBody());
 	
-	ResponseEntity<String> forEntityProd = restTemplate.getForEntity("http://localhost:" + prodapp.getMappedPort(8080), String.class);
+	ResponseEntity<String> forEntityProd = restTemplate.getForEntity("http://localhost:" + prodapp.getMappedPort(8081), String.class);
         System.out.println(forEntityProd.getBody());
 	
 	    
