@@ -8,23 +8,27 @@ class DemoApplicationTests {
     @Autowired
     TestRestTemplate restTemplate;
 	
-    private static GenericContainer<?> app = new GenericContainer<>("app:1.0");
-    private static GenericContainer<?> appLatest = new GenericContainer<>("app:latest"); 
+    private static GenericContainer<?> devapp = new GenericContainer<>("devapp");
+    private static GenericContainer<?> prodapp = new GenericContainer<>("prodapp"); 
 
     @BeforeAll
     public static void setUp() {
-        app.start();
-	appLatest.start();
+        devapp.start();
+	prodapp.start();
 	    
     }
 
     @Test
     void contextLoads() {
-        ResponseEntity<String> forEntity = restTemplate.getForEntity("http://localhost:" + app.getMappedPort(8080), String.class);
-        System.out.println(forEntity.getBody());
+        ResponseEntity<String> forEntityDev = restTemplate.getForEntity("http://localhost:" + devapp.getMappedPort(8080), String.class);
+        System.out.println(forEntityDev.getBody());
+	
+	ResponseEntity<String> forEntityProd = restTemplate.getForEntity("http://localhost:" + prodapp.getMappedPort(8080), String.class);
+        System.out.println(forEntityProd.getBody());
 	
 	    
-	assertEquals("Current profile is dev", forEntity.getBody());
+	assertEquals("Current profile is dev", forEntityDev.getBody());
+	assertEquals("Current profile is production", forEntityProd.getBody());
     }
 
 }
